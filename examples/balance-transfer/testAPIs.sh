@@ -1,4 +1,9 @@
 #!/bin/bash
+#
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 jq --version > /dev/null 2>&1
 if [ $? -ne 0 ]; then
@@ -122,8 +127,8 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["localhost:7051", "localhost:8051"],
-	"fcn":"invoke",
-	"args":["move","a","b","10"]
+	"fcn":"move",
+	"args":["a","b","10"]
 }')
 echo "Transacton ID is $TRX_ID"
 echo
@@ -132,7 +137,7 @@ echo
 echo "GET query chaincode on peer1 of Org1"
 echo
 curl -s -X GET \
-  "http://52.243.33.24:4000/channels/mychannel/chaincodes/mycc?peer=peer1&args=%5B%22query%22%2C%22a%22%5D" \
+  "http://52.243.33.24:4000/channels/mychannel/chaincodes/mycc?peer=peer1&fcn=query&args=%5B%22a%22%5D" \
   -H "authorization: Bearer $ORG1_TOKEN" \
   -H "content-type: application/json"
 echo
