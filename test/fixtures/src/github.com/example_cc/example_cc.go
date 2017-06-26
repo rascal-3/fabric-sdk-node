@@ -124,10 +124,10 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 		// queries an entity state
 		return t.query(stub, args)
 	}
-	if function == "move" {
-		// Deletes an entity from its state
-		return t.move(stub, args)
-	}
+	// if function == "move" {
+	// 	// Deletes an entity from its state
+	// 	return t.move(stub, args)
+	// }
 	if function == "transfer" {
 		return t.transfer(stub, args)
 	}
