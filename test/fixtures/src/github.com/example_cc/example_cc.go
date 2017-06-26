@@ -76,34 +76,34 @@ func (t *SimpleChaincode) readCustomer(stub shim.ChaincodeStubInterface, args []
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 	logger.Info("########### example_cc0 Init ###########")
 
-	_, args := stub.GetFunctionAndParameters()
-	var A, B string    // Entities
-	var Aval, Bval int // Asset holdings
-	var err error
+	// _, args := stub.GetFunctionAndParameters()
+	// var A, B string    // Entities
+	// var Aval, Bval int // Asset holdings
+	// var err error
 
-	// Initialize the chaincode
-	A = args[0]
-	Aval, err = strconv.Atoi(args[1])
-	if err != nil {
-		return shim.Error("Expecting integer value for asset holding")
-	}
-	B = args[2]
-	Bval, err = strconv.Atoi(args[3])
-	if err != nil {
-		return shim.Error("Expecting integer value for asset holding")
-	}
-	logger.Info("Aval = %d, Bval = %d\n", Aval, Bval)
+	// // Initialize the chaincode
+	// A = args[0]
+	// Aval, err = strconv.Atoi(args[1])
+	// if err != nil {
+	// 	return shim.Error("Expecting integer value for asset holding")
+	// }
+	// B = args[2]
+	// Bval, err = strconv.Atoi(args[3])
+	// if err != nil {
+	// 	return shim.Error("Expecting integer value for asset holding")
+	// }
+	// logger.Info("Aval = %d, Bval = %d\n", Aval, Bval)
 
-	// Write the state to the ledger
-	err = stub.PutState(A, []byte(strconv.Itoa(Aval)))
-	if err != nil {
-		return shim.Error(err.Error())
-	}
+	// // Write the state to the ledger
+	// err = stub.PutState(A, []byte(strconv.Itoa(Aval)))
+	// if err != nil {
+	// 	return shim.Error(err.Error())
+	// }
 
-	err = stub.PutState(B, []byte(strconv.Itoa(Bval)))
-	if err != nil {
-		return shim.Error(err.Error())
-	}
+	// err = stub.PutState(B, []byte(strconv.Itoa(Bval)))
+	// if err != nil {
+	// 	return shim.Error(err.Error())
+	// }
 
 	return shim.Success(nil)
 
