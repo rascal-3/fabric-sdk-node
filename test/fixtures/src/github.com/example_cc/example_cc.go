@@ -242,7 +242,7 @@ func (t *SimpleChaincode) initCustomer(stub shim.ChaincodeStubInterface, args []
 // 	}
 // 	Aval = Aval - X
 // 	Bval = Bval + X
-// 	logger.Infof("Aval = %d, Bval = %d\n", Aval, Bval)
+// 	logger.Debugf("Aval = %d, Bval = %d\n", Aval, Bval)
 
 // 	// Write the state back to the ledger
 // 	err = stub.PutState(A, []byte(strconv.Itoa(Aval)))
@@ -273,10 +273,10 @@ func (t *SimpleChaincode) transfer(stub shim.ChaincodeStubInterface, args []stri
 	B = args[1]
 
 	phoneNumber = args[3]
-	logger.Infof("Passed phoneNumber: %s\n", phoneNumber)
+	logger.Debugf("Passed phoneNumber: %s\n", phoneNumber)
 
 	msg = args[4]
-	logger.Infof("Passed message: %s\n", msg)
+	logger.Debugf("Passed message: %s\n", msg)
 
 	senderAsBytes, err := stub.GetState(A)
 	if err != nil {
@@ -321,7 +321,7 @@ func (t *SimpleChaincode) transfer(stub shim.ChaincodeStubInterface, args []stri
 	}
 	Aval = Aval - X
 	Bval = Bval + X
-	logger.Infof("Aval = %d, Bval = %d\n", Aval, Bval)
+	logger.Debugf("Aval = %d, Bval = %d\n", Aval, Bval)
 
 	sender.Balance = Aval
 	recipient.Balance = Bval
@@ -395,7 +395,7 @@ func (t *SimpleChaincode) query(stub shim.ChaincodeStubInterface, args []string)
 	}
 
 	jsonResp := "{\"Name\":\"" + A + "\",\"Amount\":\"" + string(Avalbytes) + "\"}"
-	logger.Infof("Query Response:%s\n", jsonResp)
+	logger.Debugf("Query Response:%s\n", jsonResp)
 	return shim.Success(Avalbytes)
 }
 

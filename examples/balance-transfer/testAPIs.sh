@@ -141,6 +141,20 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["localhost:7051", "localhost:8051"],
+	"fcn":"initCustomer",
+	"args":["マエジマ ヨウイチ", "7654321", "090-8765-4321", "10000000"]
+}')
+echo "Transacton ID is $TRX_ID"
+echo
+
+echo "POST invoke chaincode on peers of Org1 and Org2"
+echo
+TRX_ID=$(curl -s -X POST \
+  http://52.243.33.24:4000/channels/mychannel/chaincodes/mycc \
+  -H "authorization: Bearer $ORG1_TOKEN" \
+  -H "content-type: application/json" \
+  -d '{
+	"peers": ["localhost:7051", "localhost:8051"],
 	"fcn":"transfer",
 	"args":["アライ ケンゾウ", "マエジマ ヨウイチ", "1500", "090-1234-5678", "Hello!"]
 }')
