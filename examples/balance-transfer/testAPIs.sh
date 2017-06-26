@@ -114,7 +114,7 @@ curl -s -X POST \
 	"chaincodeName":"mycc",
 	"chaincodeVersion":"v0",
 	"functionName":"init",
-	"args":["a","100","b","200"]
+	"args":["アライ ケンゾウ","10000000","マエジマ ヨウイチ","10000000"]
 }'
 echo
 echo
@@ -127,8 +127,8 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["localhost:7051", "localhost:8051"],
-	"fcn":"move",
-	"args":["a","b","10"]
+	"fcn":"transfer",
+	"args":["アライ ケンゾウ", "マエジマ ヨウイチ", "1500", "Hello!"]
 }')
 echo "Transacton ID is $TRX_ID"
 echo
@@ -137,7 +137,7 @@ echo
 echo "GET query chaincode on peer1 of Org1"
 echo
 curl -s -X GET \
-  "http://52.243.33.24:4000/channels/mychannel/chaincodes/mycc?peer=peer1&fcn=query&args=%5B%22a%22%5D" \
+  "http://52.243.33.24:4000/channels/mychannel/chaincodes/mycc?peer=peer1&fcn=query&args=%5b%22%e3%82%a2%e3%83%a9%e3%82%a4%20%e3%82%b1%e3%83%b3%e3%82%be%e3%82%a6%22%5d" \
   -H "authorization: Bearer $ORG1_TOKEN" \
   -H "content-type: application/json"
 echo
