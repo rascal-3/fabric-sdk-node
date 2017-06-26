@@ -18,7 +18,7 @@ echo
 ORG1_TOKEN=$(curl -s -X POST \
   http://52.243.33.24:4000/users \
   -H "content-type: application/x-www-form-urlencoded" \
-  -d 'username=アライ ケンゾウ&orgName=org1')
+  -d 'username=KenzoArai&orgName=org1')
 echo $ORG1_TOKEN
 ORG1_TOKEN=$(echo $ORG1_TOKEN | jq ".token" | sed "s/\"//g")
 echo
@@ -29,7 +29,7 @@ echo
 ORG2_TOKEN=$(curl -s -X POST \
   http://52.243.33.24:4000/users \
   -H "content-type: application/x-www-form-urlencoded" \
-  -d 'username=マエジマ ヨウイチ&orgName=org2')
+  -d 'username=YoichiMaejima&orgName=org2')
 echo $ORG2_TOKEN
 ORG2_TOKEN=$(echo $ORG2_TOKEN | jq ".token" | sed "s/\"//g")
 echo
@@ -114,7 +114,7 @@ curl -s -X POST \
 	"chaincodeName":"mycc",
 	"chaincodeVersion":"v0",
 	"functionName":"init",
-	"args":["アライ ケンゾウ","10000000","マエジマ ヨウイチ","10000000"]
+	"args":["KenzoArai","10000000","YoichiMaejima","10000000"]
 }'
 echo
 echo
@@ -128,7 +128,7 @@ TRX_ID=$(curl -s -X POST \
   -d '{
 	"peers": ["localhost:7051", "localhost:8051"],
 	"fcn":"initCustomer",
-	"args":["アライ ケンゾウ", "1234567", "090-1234-5678", "10000000"]
+	"args":["KenzoArai", "1234567", "090-1234-5678", "10000000"]
 }')
 echo "Transacton ID is $TRX_ID"
 echo
@@ -142,7 +142,7 @@ TRX_ID=$(curl -s -X POST \
   -d '{
 	"peers": ["localhost:7051", "localhost:8051"],
 	"fcn":"initCustomer",
-	"args":["マエジマ ヨウイチ", "7654321", "090-8765-4321", "10000000"]
+	"args":["YoichiMaejima", "7654321", "090-8765-4321", "10000000"]
 }')
 echo "Transacton ID is $TRX_ID"
 echo
@@ -156,7 +156,7 @@ TRX_ID=$(curl -s -X POST \
   -d '{
 	"peers": ["localhost:7051", "localhost:8051"],
 	"fcn":"transfer",
-	"args":["アライ ケンゾウ", "マエジマ ヨウイチ", "1500", "090-1234-5678", "Hello!"]
+	"args":["KenzoArai", "YoichiMaejima", "1500", "090-1234-5678", "Hello!"]
 }')
 echo "Transacton ID is $TRX_ID"
 echo
