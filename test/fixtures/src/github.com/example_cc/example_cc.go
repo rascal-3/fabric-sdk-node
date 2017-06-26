@@ -296,14 +296,14 @@ func (t *SimpleChaincode) transfer(stub shim.ChaincodeStubInterface, args []stri
 	sender := customer{}
 	err = json.Unmarshal(senderAsBytes, &sender) //unmarshal it aka JSON.parse()
 	if err != nil {
-		return shim.Error(err.Error())
+		return shim.Error("Sender check failed: " + err.Error())
 	}
 
 	// recipent check
 	recipient := customer{}
 	err = json.Unmarshal(recipientAsBytes, &recipient) //unmarshal it aka JSON.parse()
 	if err != nil {
-		return shim.Error(err.Error())
+		return shim.Error("Recipient check failed: " + err.Error())
 	}
 
 	// confirm if phoneNumber is correct
@@ -336,17 +336,20 @@ func (t *SimpleChaincode) transfer(stub shim.ChaincodeStubInterface, args []stri
 	senderJSONasBytes, _ := json.Marshal(sender)
 	err = stub.PutState(sender.Name, senderJSONasBytes) //rewrite the sender
 	if err != nil {
-		return shim.Error(err.Error())
+		return shim.Error("Marshalising senderJSONasBytes failed: " + err.Error())
 	}
 
 	recipientJSONasBytes, _ := json.Marshal(recipient)
 	err = stub.PutState(recipient.Name, recipientJSONasBytes) //rewrite the sender
 	if err != nil {
-		return shim.Error(err.Error())
+		return shim.Error("Marshalising recipientJSONasBytes failed: " + err.Error())
 	}
 
 	// To return transaction result
-	transactionJSONasBytes, _ := json.Marshal(transactionA)
+	transactionJSONasBytes, err := json.Marshal(transactionA)
+	if err != nil {
+		return shim.Error("Make transaction failed: " + err.Error())
+	}
 
 	fmt.Println("- end transfer (success)")
 	return shim.Success(transactionJSONasBytes)
