@@ -345,14 +345,14 @@ func (t *SimpleChaincode) transfer(stub shim.ChaincodeStubInterface, args []stri
 		return shim.Error("Marshalising recipientJSONasBytes failed: " + err.Error())
 	}
 
-	// To return transaction result
-	transactionJSONasBytes, err := json.Marshal(transactionA)
-	if err != nil {
-		return shim.Error("Make transaction failed: " + err.Error())
-	}
+	// // To return transaction result
+	// transactionJSONasBytes, err := json.Marshal(transactionA)
+	// if err != nil {
+	// 	return shim.Error("Make transaction failed: " + err.Error())
+	// }
 
 	fmt.Println("- end transfer (success)")
-	return shim.Success(transactionJSONasBytes)
+	return shim.Success(nil)
 
 }
 
