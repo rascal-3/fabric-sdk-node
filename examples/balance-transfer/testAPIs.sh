@@ -104,20 +104,20 @@ curl -s -X POST \
 echo
 echo
 
-# echo "POST instantiate chaincode on peer1 of Org1"
-# echo
-# curl -s -X POST \
-#   http://52.243.33.24:4000/channels/mychannel/chaincodes \
-#   -H "authorization: Bearer $ORG1_TOKEN" \
-#   -H "content-type: application/json" \
-#   -d '{
-# 	"chaincodeName":"mycc",
-# 	"chaincodeVersion":"v0",
-# 	"functionName":"init",
-# 	"args":["アライ ケンゾウ","10000000","マエジマ ヨウイチ","10000000"]
-# }'
-# echo
-# echo
+echo "POST instantiate chaincode on peer1 of Org1"
+echo
+curl -s -X POST \
+  http://52.243.33.24:4000/channels/mychannel/chaincodes \
+  -H "authorization: Bearer $ORG1_TOKEN" \
+  -H "content-type: application/json" \
+  -d '{
+	"chaincodeName":"mycc",
+	"chaincodeVersion":"v0",
+	"functionName":"init",
+	"args":["アライ ケンゾウ","10000000","マエジマ ヨウイチ","10000000"]
+}'
+echo
+echo
 
 echo "POST invoke chaincode on peers of Org1 and Org2"
 echo

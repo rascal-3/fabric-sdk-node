@@ -176,7 +176,7 @@ func (t *SimpleChaincode) initCustomer(stub shim.ChaincodeStubInterface, args []
 		return shim.Error("Failed to get customer: " + err.Error())
 	} else if customerAsBytes != nil {
 		fmt.Println("This customer already exists: " + name)
-		return shim.Error("This customer already exists: " + name)
+		// return shim.Error("This customer already exists: " + name)
 	}
 
 	balanceVal, _ = strconv.Atoi(balance)
@@ -201,62 +201,62 @@ func (t *SimpleChaincode) initCustomer(stub shim.ChaincodeStubInterface, args []
 
 }
 
-func (t *SimpleChaincode) move(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	// must be an invoke
-	var A, B string    // Entities
-	var Aval, Bval int // Asset holdings
-	var X int          // Transaction value
-	var err error
+// func (t *SimpleChaincode) move(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+// 	// must be an invoke
+// 	var A, B string    // Entities
+// 	var Aval, Bval int // Asset holdings
+// 	var X int          // Transaction value
+// 	var err error
 
-	if len(args) != 3 {
-		return shim.Error("Incorrect number of arguments. Expecting 4, function followed by 2 names and 1 value")
-	}
+// 	if len(args) != 3 {
+// 		return shim.Error("Incorrect number of arguments. Expecting 4, function followed by 2 names and 1 value")
+// 	}
 
-	A = args[0]
-	B = args[1]
+// 	A = args[0]
+// 	B = args[1]
 
-	// Get the state from the ledger
-	// TODO: will be nice to have a GetAllState call to ledger
-	Avalbytes, err := stub.GetState(A)
-	if err != nil {
-		return shim.Error("Failed to get state")
-	}
-	if Avalbytes == nil {
-		return shim.Error("Entity not found")
-	}
-	Aval, _ = strconv.Atoi(string(Avalbytes))
+// 	// Get the state from the ledger
+// 	// TODO: will be nice to have a GetAllState call to ledger
+// 	Avalbytes, err := stub.GetState(A)
+// 	if err != nil {
+// 		return shim.Error("Failed to get state")
+// 	}
+// 	if Avalbytes == nil {
+// 		return shim.Error("Entity not found")
+// 	}
+// 	Aval, _ = strconv.Atoi(string(Avalbytes))
 
-	Bvalbytes, err := stub.GetState(B)
-	if err != nil {
-		return shim.Error("Failed to get state")
-	}
-	if Bvalbytes == nil {
-		return shim.Error("Entity not found")
-	}
-	Bval, _ = strconv.Atoi(string(Bvalbytes))
+// 	Bvalbytes, err := stub.GetState(B)
+// 	if err != nil {
+// 		return shim.Error("Failed to get state")
+// 	}
+// 	if Bvalbytes == nil {
+// 		return shim.Error("Entity not found")
+// 	}
+// 	Bval, _ = strconv.Atoi(string(Bvalbytes))
 
-	// Perform the execution
-	X, err = strconv.Atoi(args[2])
-	if err != nil {
-		return shim.Error("Invalid transaction amount, expecting a integer value")
-	}
-	Aval = Aval - X
-	Bval = Bval + X
-	logger.Infof("Aval = %d, Bval = %d\n", Aval, Bval)
+// 	// Perform the execution
+// 	X, err = strconv.Atoi(args[2])
+// 	if err != nil {
+// 		return shim.Error("Invalid transaction amount, expecting a integer value")
+// 	}
+// 	Aval = Aval - X
+// 	Bval = Bval + X
+// 	logger.Infof("Aval = %d, Bval = %d\n", Aval, Bval)
 
-	// Write the state back to the ledger
-	err = stub.PutState(A, []byte(strconv.Itoa(Aval)))
-	if err != nil {
-		return shim.Error(err.Error())
-	}
+// 	// Write the state back to the ledger
+// 	err = stub.PutState(A, []byte(strconv.Itoa(Aval)))
+// 	if err != nil {
+// 		return shim.Error(err.Error())
+// 	}
 
-	err = stub.PutState(B, []byte(strconv.Itoa(Bval)))
-	if err != nil {
-		return shim.Error(err.Error())
-	}
+// 	err = stub.PutState(B, []byte(strconv.Itoa(Bval)))
+// 	if err != nil {
+// 		return shim.Error(err.Error())
+// 	}
 
-	return shim.Success(nil)
-}
+// 	return shim.Success(nil)
+// }
 
 func (t *SimpleChaincode) transfer(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	// must be an invoke
