@@ -18,7 +18,7 @@ echo
 ORG1_TOKEN=$(curl -s -X POST \
   http://52.243.33.24:4000/users \
   -H "content-type: application/x-www-form-urlencoded" \
-  -d 'username=Jim&orgName=org1')
+  -d 'username=アライ ケンゾウ&orgName=org1')
 echo $ORG1_TOKEN
 ORG1_TOKEN=$(echo $ORG1_TOKEN | jq ".token" | sed "s/\"//g")
 echo
@@ -29,7 +29,7 @@ echo
 ORG2_TOKEN=$(curl -s -X POST \
   http://52.243.33.24:4000/users \
   -H "content-type: application/x-www-form-urlencoded" \
-  -d 'username=Barry&orgName=org2')
+  -d 'username=マエジマ ヨウイチ&orgName=org2')
 echo $ORG2_TOKEN
 ORG2_TOKEN=$(echo $ORG2_TOKEN | jq ".token" | sed "s/\"//g")
 echo
@@ -104,19 +104,33 @@ curl -s -X POST \
 echo
 echo
 
-echo "POST instantiate chaincode on peer1 of Org1"
+# echo "POST instantiate chaincode on peer1 of Org1"
+# echo
+# curl -s -X POST \
+#   http://52.243.33.24:4000/channels/mychannel/chaincodes \
+#   -H "authorization: Bearer $ORG1_TOKEN" \
+#   -H "content-type: application/json" \
+#   -d '{
+# 	"chaincodeName":"mycc",
+# 	"chaincodeVersion":"v0",
+# 	"functionName":"init",
+# 	"args":["アライ ケンゾウ","10000000","マエジマ ヨウイチ","10000000"]
+# }'
+# echo
+# echo
+
+echo "POST invoke chaincode on peers of Org1 and Org2"
 echo
-curl -s -X POST \
-  http://52.243.33.24:4000/channels/mychannel/chaincodes \
+TRX_ID=$(curl -s -X POST \
+  http://52.243.33.24:4000/channels/mychannel/chaincodes/mycc \
   -H "authorization: Bearer $ORG1_TOKEN" \
   -H "content-type: application/json" \
   -d '{
-	"chaincodeName":"mycc",
-	"chaincodeVersion":"v0",
-	"functionName":"init",
-	"args":["アライ ケンゾウ","10000000","マエジマ ヨウイチ","10000000"]
-}'
-echo
+	"peers": ["localhost:7051", "localhost:8051"],
+	"fcn":"initCustomer",
+	"args":["アライ ケンゾウ", "1234567", "090-1234-5678", "10000000"]
+}')
+echo "Transacton ID is $TRX_ID"
 echo
 
 echo "POST invoke chaincode on peers of Org1 and Org2"
@@ -128,7 +142,7 @@ TRX_ID=$(curl -s -X POST \
   -d '{
 	"peers": ["localhost:7051", "localhost:8051"],
 	"fcn":"transfer",
-	"args":["アライ ケンゾウ", "マエジマ ヨウイチ", "1500", "Hello!"]
+	"args":["アライ ケンゾウ", "マエジマ ヨウイチ", "1500", "090-1234-5678", "Hello!"]
 }')
 echo "Transacton ID is $TRX_ID"
 echo

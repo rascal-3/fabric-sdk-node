@@ -131,6 +131,9 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	if function == "transfer" {
 		return t.transfer(stub, args)
 	}
+	if function == "initCustomer" {
+		return t.initCustomer(stub, args)
+	}
 
 	logger.Errorf("Unknown action, check the first argument, must be one of 'delete', 'query', or 'move'. But got: %v", args[0])
 	return shim.Error(fmt.Sprintf("Unknown action, check the first argument, must be one of 'delete', 'query', or 'move'. But got: %v", args[0]))
@@ -323,14 +326,6 @@ func (t *SimpleChaincode) transfer(stub shim.ChaincodeStubInterface, args []stri
 	sender.Balance = Aval
 	recipient.Balance = Bval
 
-	// ObjectType           string `json:"docType"` //docType is used to distinguish the various types of objects in state database
-	// SenderName           string `json:"senderName"`
-	// RecipientName        string `json:"recipientName"`
-	// RecipientPhoneNumber string `json:"recipientPhoneNumber"`
-	// Amount               int    `json:"amount"`
-	// Message              string `json:"message"`
-
-	// TODO: transaction to history
 	objectType := "transaction"
 	transactionA := &transaction{objectType, "出金", X, msg}
 	transactionB := &transaction{objectType, "入金", X, msg}
