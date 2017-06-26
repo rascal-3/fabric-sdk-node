@@ -333,13 +333,19 @@ func (t *SimpleChaincode) transfer(stub shim.ChaincodeStubInterface, args []stri
 	sender.History = append(sender.History, *transactionA)
 	recipient.History = append(recipient.History, *transactionB)
 
-	senderJSONasBytes, _ := json.Marshal(sender)
+	senderJSONasBytes, err := json.Marshal(sender)
+	if err != nil {
+		return shim.Error("Marshalise senderJSONasBytes failed: " + err.Error())
+	}
 	err = stub.PutState(sender.Name, senderJSONasBytes) //rewrite the sender
 	if err != nil {
-		return shim.Error("Marshalising senderJSONasBytes failed: " + err.Error())
+		return shim.Error("PutState senderJSONasBytes failed: " + err.Error())
 	}
 
-	recipientJSONasBytes, _ := json.Marshal(recipient)
+	recipientJSONasBytes, err := json.Marshal(recipient)
+	if err != nil {
+		return shim.Error("Marshalise recipientJSONasBytes failed: " + err.Error())
+	}
 	err = stub.PutState(recipient.Name, recipientJSONasBytes) //rewrite the sender
 	if err != nil {
 		return shim.Error("Marshalising recipientJSONasBytes failed: " + err.Error())
